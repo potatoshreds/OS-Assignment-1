@@ -25,9 +25,9 @@ char            line[NL];	/* command input buffer */
 	shell prompt
  */
 
-prompt(void)
+void prompt(void)
 {
-  // ## Remove 'fprintf' statement for submission
+  // ## REMOVE THIS 'fprintf' STATEMENT BEFORE SUBMISSION
   fprintf(stdout, "\n msh> ");
   fflush(stdout);
 }
@@ -39,7 +39,6 @@ prompt(void)
 int main(int argk, char *argv[], char *envp[])
 {
    int             frkRtnVal;	    /* value returned by fork sys call */
-   int             wpid;		        /* value returned by wait */
   char           *v[NV];	        /* array of pointers to command line tokens */
   char           *sep = " \t\n";  /* command line token separators    */
   int             i;		          /* parse index */
@@ -51,10 +50,8 @@ int main(int argk, char *argv[], char *envp[])
     fgets(line, NL, stdin);
     fflush(stdin);
 
+    // This if() required for gradescope
     if (feof(stdin)) {		/* non-zero on EOF  */
-
-      fprintf(stderr, "EOF pid %d feof %d ferror %d\n", getpid(),
-	      feof(stdin), ferror(stdin));
       exit(0);
     }
     if (line[0] == '#' || line[0] == '\n' || line[0] == '\000'){
@@ -82,7 +79,8 @@ int main(int argk, char *argv[], char *envp[])
       }
       default:			/* code executed only by parent process */
       {
-      	wpid = wait(0);
+      	wait(0);
+        // REMOVE PRINTF STATEMENT BEFORE SUBMISSION
         printf("%s done \n", v[0]);
     	  break;
       }
